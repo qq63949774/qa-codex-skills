@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tracking Testcase Writer"
+  short_description: "Generate analytics event test cases from event CSV definitions."
+  default_prompt: "Generate tracking test cases from event CSV with full property coverage and trigger-based steps."

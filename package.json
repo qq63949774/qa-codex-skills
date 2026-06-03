@@ -1,0 +1,18 @@
+{
+  "name": "@qa-proof-desk/codex-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "QA Proof Desk Codex skill bundle installer.",
+  "bin": {
+    "qa-codex-skills": "bin/qa-codex-skills.mjs"
+  },
+  "scripts": {
+    "install-skills": "node bin/qa-codex-skills.mjs install",
+    "list": "node bin/qa-codex-skills.mjs list",
+    "check": "node bin/qa-codex-skills.mjs check",
+    "safety-scan": "node bin/qa-codex-skills.mjs safety-scan"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sotaten Level Legality"
+  short_description: "Check Sotaten level legality."
+  default_prompt: "Use $sotaten-level-legality to check the current Sotaten project level legality and report blocking issues."
+
+policy:
+  allow_implicit_invocation: true

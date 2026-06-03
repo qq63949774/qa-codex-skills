@@ -1,0 +1,7 @@
+interface:
+  display_name: "Mathsota Arithmetic Level Check"
+  short_description: "Validate Mathsota formula-target level JSONs."
+  default_prompt: "Use $mathsota-arithmetic-level-check to scan Mathsota LevelData formulas and report any expression-target mismatch."
+
+policy:
+  allow_implicit_invocation: true

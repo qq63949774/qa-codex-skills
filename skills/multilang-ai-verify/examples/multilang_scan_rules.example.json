@@ -1,0 +1,25 @@
+{
+  "check_structure": true,
+  "base_lang": "de",
+  "ignore_words": [
+    "Wi-Fi",
+    "NaCl"
+  ],
+  "ignore_regexes": [
+    "^[A-Z]{2,}$"
+  ],
+  "per_language_ignore_words": {
+    "ja": [
+      "E.T."
+    ],
+    "ru": [
+      "Yandex"
+    ]
+  },
+  "per_language_ignore_regexes": {
+    "zh-Hant": [
+      "^webp$",
+      "^heic$"
+    ]
+  }
+}

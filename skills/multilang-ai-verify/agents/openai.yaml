@@ -1,0 +1,4 @@
+interface:
+  display_name: "Multilang AI Verify"
+  short_description: "Scan multilingual data with bundled scripts, then optionally verify suspect rows with MiniMax or DeepSeek using config files or env vars."
+  default_prompt: "Use the bundled scan script in this skill to produce language_suspect_entries.csv, then ask whether to run the bundled AI verification script with MiniMax or DeepSeek. Prefer reading provider settings from an ai_verify_config.json or ai_verify_config.md file in the current directory."

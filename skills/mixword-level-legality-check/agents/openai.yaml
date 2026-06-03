@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mixword Level Legality Check"
+  short_description: "Validate Mixword level legality and solvability workflows"
+  default_prompt: "Use this skill to validate Mixword level files with static checks and runtime legality simulation."

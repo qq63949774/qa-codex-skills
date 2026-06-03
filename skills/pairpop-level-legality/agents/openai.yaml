@@ -1,0 +1,4 @@
+interface:
+  display_name: "PairPop Level Legality"
+  short_description: "Check PairPop model=3 text-bubble level legality."
+  default_prompt: "Check PairPop level JSON legality against current client rules."

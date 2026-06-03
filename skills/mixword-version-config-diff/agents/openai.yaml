@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mixword Config Diff"
+  short_description: "Save and compare Mixword release configs"
+  default_prompt: "Use $mixword-version-config-diff to save a release baseline or compare version config changes."

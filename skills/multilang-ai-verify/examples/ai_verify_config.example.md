@@ -1,0 +1,7 @@
+# AI Verify Config
+
+provider: minimax
+api_key: your-api-key
+base_url: https://api.minimax.io/v1
+model: MiniMax-M2.5
+temperature: 0.1

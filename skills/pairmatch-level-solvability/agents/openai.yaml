@@ -1,0 +1,4 @@
+interface:
+  display_name: "PairMatch Solvability"
+  short_description: "Check PairMatch level JSON solvability invariants and write a client-rule-based guarantee."
+  default_prompt: "Use the bundled checker to validate PairMatch level JSON solvability against the current client rules, then summarize the guarantee, the checked invariants, and any suspicious levels."

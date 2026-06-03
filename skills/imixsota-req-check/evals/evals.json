@@ -1,0 +1,29 @@
+{
+  "skill_name": "imixsota-req-check",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "根据【imixsota】v1.2.0.docx，检查当前项目代码，重点关注8. 测试验收标准，给我做一份带代码举证的验收结论，不要随意下判断。",
+      "expected_output": "A QA-style acceptance review for section 8 with requirement IDs, code evidence, test evidence, blockers, and no unsupported pass claims.",
+      "files": [
+        "<imixsota-project-root>/【imixsota】v1.2.0.docx"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "帮我核对这个仓库是否满足 imixsota 广告需求文档，重点看动态ID缓存、热启动过期检测、激励视频和插屏展示策略，并把未完成项按风险排序。",
+      "expected_output": "A targeted requirement-to-code inspection centered on ad modules, with risk-sorted gaps and traceable evidence.",
+      "files": [
+        "<imixsota-project-root>/【imixsota】v1.2.0.docx"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "请按 QA 视角检查当前 imixsota 项目，不要改代码。我要你根据需求文档确认哪些条目是已实现、部分实现、缺失，哪些只是因为环境问题暂时不能做运行验收。",
+      "expected_output": "A status matrix that separates implemented, partial, missing, and runtime-blocked items, backed by file references and exact blocker descriptions.",
+      "files": [
+        "<imixsota-project-root>/【imixsota】v1.2.0.docx"
+      ]
+    }
+  ]
+}
