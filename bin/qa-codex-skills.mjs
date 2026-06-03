@@ -128,23 +128,23 @@ async function safetyScan() {
     {
       name: "personal paths and fixed accounts",
       command:
-        "rg -n --hidden --glob '!bin/qa-codex-skills.mjs' -S '(/Users/adin|/Users/pengyibin|Desktop/moby|Downloads/mixfun|192\\\\.168\\\\.|deltafun|qq63949774)' .",
+        "rg -n --hidden --glob '!.git/**' --glob '!bin/qa-codex-skills.mjs' -S '(/Users/adin|/Users/pengyibin|Desktop/moby|Downloads/mixfun|192\\\\.168\\\\.|deltafun|qq63949774)' .",
       allowMatches: false,
     },
     {
       name: "real-looking secrets",
       command:
-        "rg -n --hidden --glob '!bin/qa-codex-skills.mjs' -S '(BEGIN .*PRIVATE KEY|sk-[A-Za-z0-9]{20,}|gh[pousr]_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{20,})' .",
+        "rg -n --hidden --glob '!.git/**' --glob '!bin/qa-codex-skills.mjs' -S '(BEGIN .*PRIVATE KEY|sk-[A-Za-z0-9]{20,}|gh[pousr]_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{20,})' .",
       allowMatches: false,
     },
     {
       name: "generated caches",
-      command: "find . \\( -name .DS_Store -o -name __pycache__ -o -name '*.pyc' \\) -print",
+      command: "find . -path ./.git -prune -o \\( -name .DS_Store -o -name __pycache__ -o -name '*.pyc' \\) -print",
       allowMatches: false,
     },
     {
       name: "package files",
-      command: "find . -maxdepth 2 \\( -name package-lock.json -o -name node_modules \\) -print",
+      command: "find . -path ./.git -prune -o -maxdepth 2 \\( -name package-lock.json -o -name node_modules \\) -print",
       allowMatches: false,
     },
   ];
