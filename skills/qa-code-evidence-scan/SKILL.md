@@ -20,6 +20,7 @@ This skill only handles code-evidence scanning. Testcase writing is out of scope
 1. Verify inputs
    - Confirm cases CSV path and project path.
    - Default scan root to business code (example: `Assets/Game`).
+   - If the project root has no scannable business code/config files, or only contains generated testcase/report/output files, no case may be marked `通过`.
 
 2. Run scan script
    - Use `scripts/ai_case_verifier.py` (stable entry).
@@ -42,12 +43,14 @@ This skill only handles code-evidence scanning. Testcase writing is out of scope
    - Keep `测试结果` unchanged.
 
 4. Confidence filter
-   - `High`: strong keyword evidence in business code.
-   - `Medium`: moderate keyword evidence.
-   - `Low`: weak/third-party noise or insufficient evidence.
+   - `High`: traceable implementation evidence in business code/config, including file path, line number, and a concrete anchor such as `key=...`, `symbol=...`, `class=...`, or `function=...`.
+   - `Medium`: traceable implementation evidence exists but still needs runtime validation.
+   - `Low`: weak/generic keyword hits, third-party noise, generated files, or insufficient evidence.
    - `AI测试结果` must be explicit:
-     - `通过`: Medium/High business-code evidence found.
-     - `不通过`: no sufficient evidence, or evidence is Low confidence.
+     - `通过`: Medium/High traceable business-code/config evidence found.
+     - `不通过`: no sufficient evidence, evidence is Low confidence, or the finding is only semantic/keyword similarity.
+   - Never mark `通过` only because requirement words overlap code words. A reason like `命中<path>:<keyword>/<keyword>` without line number and concrete anchor is not valid proof.
+   - Evidence must not come from generated testcase CSVs, reports, `QAReports/`, `reports/`, `output/`, docs, package/vendor/plugin/third-party files, or skill scripts.
 
 5. Report expectations
    - Provide AI pass count, AI pass rate, parameters, scan timestamp/timezone, and residual risks.

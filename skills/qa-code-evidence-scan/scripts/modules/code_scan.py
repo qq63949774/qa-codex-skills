@@ -39,6 +39,25 @@ IGNORE_DIRS = {
     ".idea",
     ".vscode",
     "__pycache__",
+    "qareports",
+    "reports",
+    "report",
+    "output",
+    "outputs",
+    "testcases",
+    "testcase",
+    "generated",
+    "docs",
+    "doc",
+    "vendor",
+    "vendors",
+    "package",
+    "packages",
+    "plugin",
+    "plugins",
+    "third",
+    "third_party",
+    "third-party",
 }
 
 CODE_EXTS = {
@@ -319,17 +338,16 @@ def main() -> int:
             top_hits = evidence.keywords[:5]
             reason = f"命中{evidence.path}:{'/'.join(top_hits[:3])}"
             confidence = score_confidence(len(evidence.keywords), evidence.path)
+            row["AI测试结果"] = "不通过"
             if confidence == "Low":
-                row["AI测试结果"] = "不通过"
-                row["AI判定原因"] = "仅命中低置信代码证据，无法确认实现"
+                row["AI判定原因"] = "仅命中低置信关键词，缺少可追溯实现锚点"
             else:
-                row["AI测试结果"] = "通过"
-                row["AI判定原因"] = truncate_chars(reason, args.max_reason_len)
-                passed += 1
+                detail = truncate_chars(reason, args.max_reason_len)
+                row["AI判定原因"] = f"仅命中关键词，缺少可追溯实现锚点: {detail}"
         else:
             row.setdefault("测试结果", row.get("测试结果", ""))
             row["AI测试结果"] = "不通过"
-            row["AI判定原因"] = "未找到足够代码证据"
+            row["AI判定原因"] = "未找到可追溯项目代码/配置证据"
 
     pass_rate = f"{passed}/{len(rows)} ({(passed / len(rows) * 100):.2f}%)" if rows else "0/0 (0.00%)"
     for row in rows:

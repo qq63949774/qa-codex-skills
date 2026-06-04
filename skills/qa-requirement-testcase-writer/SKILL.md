@@ -160,10 +160,16 @@ Use this only when the user explicitly provides a Feishu/Lark requirement link o
    - Do not upload project code. Scan local files only.
    - If the user explicitly says not to scan code, skip this step and state that it was skipped by request.
    - If the project path cannot be inferred, ask for the local project path instead of silently skipping.
-   - Prefer the stable verifier from `qa-code-evidence-scan`: `~/.codex/skills/qa-code-evidence-scan/scripts/ai_case_verifier.py`.
+   - Prefer the stable verifier from `qa-code-evidence-scan`: `/Users/adin/.codex/skills/qa-code-evidence-scan/scripts/ai_case_verifier.py`.
    - Scan only local project code/config; never upload project code.
    - Default project scan root to the business-code root, not the report/output root. For Unity projects, prefer the Unity project folder such as `<repo>/PairPop` over the repository root when the repo also contains `QAReports/`, `reports/`, `output/`, generated scripts, or prior testcase CSVs.
    - If AI evidence reasons mention generated testcase files, report files, `QAReports/`, or the testcase generation script itself, treat the scan as polluted and rerun against the narrower business-code root before publishing.
+   - AI code judgment is an evidence gate, not a semantic similarity score:
+     - Never mark `AI测试结果=通过` from keyword overlap, requirement-text similarity, file-name similarity, or generated testcase/report artifacts.
+     - `通过` requires direct local business-code/config evidence with a traceable path, line number, and concrete implementation anchor such as `key=...`, `symbol=...`, `class=...`, `function=...`, or an equivalent config key/function/class name.
+     - Evidence must come from project code/config under the business-code root. Do not use generated testcase CSVs, reports, `QAReports/`, `reports/`, `output/`, docs, package/vendor/plugin/third-party files, or this skill's scripts as proof.
+     - Empty projects, unrelated projects, missing scannable business files, or only generic keyword hits must produce `AI测试结果=不通过` with a reason such as `未找到可追溯项目代码/配置证据`.
+     - If any `通过` row lacks path + line + concrete anchor, the AI-checked CSV is invalid; rerun with a narrower project root or downgrade the row to `不通过`.
    - Append/maintain these columns after the base testcase schema:
      - `AI测试结果`: must be `通过` or `不通过`
      - `AI判定原因`
@@ -177,9 +183,10 @@ Use this only when the user explicitly provides a Feishu/Lark requirement link o
      - `AI置信等级`
    - Keep `测试结果` unchanged for human QA execution.
    - Treat AI scan as evidence assistance only:
-     - `通过` means code/config evidence was found with Medium/High confidence.
-     - `不通过` means evidence was not found or confidence is Low.
+     - `通过` means traceable local business-code/config evidence was found.
+     - `不通过` means traceable evidence was not found, confidence is Low, or the finding is keyword-only/generic.
      - Do not claim runtime behavior is verified unless runtime execution was actually performed.
+   - After AI code judgment, run `scripts/testcase_quality_checker.py` again against the AI-checked CSV. Do not publish if the checker reports an AI evidence finding.
 
 9. Default publish testcase CSV to Feishu/Lark for Feishu requirements
    - When the requirement source is a Feishu/Lark Wiki or doc link, publish generated cases back to the version page's `测试用例` Base by default after quality check and local AI code judgment, unless the user explicitly says not to publish.

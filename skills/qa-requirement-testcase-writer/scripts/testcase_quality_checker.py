@@ -61,6 +61,39 @@ PARAMETER_HINTS = (
     "randomlevels",
 )
 
+AI_RESULT_COLUMN = "AI测试结果"
+AI_REASON_COLUMN = "AI判定原因"
+AI_PASS_RATE_COLUMN = "AI测试用例通过率"
+AI_VALID_RESULTS = {"通过", "不通过"}
+AI_FORBIDDEN_EVIDENCE_PATH_PARTS = (
+    "qareports",
+    "reports",
+    "report",
+    "output",
+    "outputs",
+    "testcases",
+    "testcase",
+    "generated",
+    "docs",
+    "doc",
+    "vendor",
+    "vendors",
+    "package",
+    "packages",
+    "plugin",
+    "plugins",
+    "third",
+    "third_party",
+    "third-party",
+    "node_modules",
+)
+AI_EVIDENCE_PATH_RE = re.compile(
+    r"(?P<path>[\w./\\ -]+\.(?:cs|js|jsx|ts|tsx|py|java|kt|swift|m|mm|go|rs|cpp|cc|c|h|hpp|lua|json|ya?ml|toml|ini|xml|gradle|properties)):(?P<line>\d+)"
+)
+AI_EVIDENCE_ANCHOR_RE = re.compile(
+    r"(?i)\b(key|symbol|class|function|method|func|config|field|property)\s*="
+)
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate testcase CSV quality before AI scan")
@@ -186,6 +219,59 @@ def check_parameter_column(fieldnames: list[str], rows: list[dict[str, str]]) ->
     return findings
 
 
+def reason_has_valid_ai_evidence(reason: str) -> tuple[bool, str]:
+    if not reason:
+        return False, "AI判定原因为空"
+
+    if "仅命中" in reason or reason.startswith("命中"):
+        return False, "AI判定原因只是关键词命中，不是可追溯实现证据"
+
+    path_match = AI_EVIDENCE_PATH_RE.search(reason)
+    if not path_match:
+        return False, "AI判定原因缺少代码/配置路径和行号，例如 `Assets/.../Foo.cs:123`"
+
+    evidence_path = path_match.group("path").replace("\\", "/").lower()
+    path_parts = [part for part in evidence_path.split("/") if part]
+    if any(part in AI_FORBIDDEN_EVIDENCE_PATH_PARTS for part in path_parts):
+        return False, f"AI证据路径来自非业务代码/配置目录: {path_match.group('path')}"
+
+    if not AI_EVIDENCE_ANCHOR_RE.search(reason):
+        return False, "AI判定原因缺少具体实现锚点，例如 `key=...`、`class=...` 或 `function=...`"
+
+    return True, ""
+
+
+def check_ai_evidence_columns(fieldnames: list[str], rows: list[dict[str, str]]) -> list[str]:
+    if AI_RESULT_COLUMN not in fieldnames:
+        return []
+
+    findings: list[str] = []
+    if AI_REASON_COLUMN not in fieldnames:
+        findings.append(f"存在`{AI_RESULT_COLUMN}`但缺少`{AI_REASON_COLUMN}`")
+    if AI_PASS_RATE_COLUMN not in fieldnames:
+        findings.append(f"存在`{AI_RESULT_COLUMN}`但缺少`{AI_PASS_RATE_COLUMN}`")
+
+    for idx, row in enumerate(rows, start=2):
+        result = (row.get(AI_RESULT_COLUMN) or "").strip()
+        reason = (row.get(AI_REASON_COLUMN) or "").strip()
+
+        if not result:
+            findings.append(f"第{idx}行 {AI_RESULT_COLUMN} 为空")
+            continue
+        if result not in AI_VALID_RESULTS:
+            findings.append(f"第{idx}行 {AI_RESULT_COLUMN} 非法值: {result}")
+            continue
+
+        if result == "通过":
+            ok, message = reason_has_valid_ai_evidence(reason)
+            if not ok:
+                findings.append(f"第{idx}行 AI通过缺少实质证据: {message}")
+        elif not reason:
+            findings.append(f"第{idx}行 AI不通过但{AI_REASON_COLUMN}为空")
+
+    return findings
+
+
 def check_category_presence(rows: list[dict[str, str]]) -> list[str]:
     coverage = detect_suite_coverage(rows)
     findings: list[str] = []
@@ -244,6 +330,7 @@ def main() -> int:
     findings.extend(check_fuzzy_expected(rows))
     findings.extend(check_case_independence(rows))
     findings.extend(check_parameter_column(fieldnames, rows))
+    findings.extend(check_ai_evidence_columns(fieldnames, rows))
     findings.extend(check_category_presence(rows))
     if report_path:
         findings.extend(check_report_file(report_path))
