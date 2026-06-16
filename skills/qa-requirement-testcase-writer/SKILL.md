@@ -160,7 +160,7 @@ Use this only when the user explicitly provides a Feishu/Lark requirement link o
    - Do not upload project code. Scan local files only.
    - If the user explicitly says not to scan code, skip this step and state that it was skipped by request.
    - If the project path cannot be inferred, ask for the local project path instead of silently skipping.
-   - Prefer the stable verifier from `qa-code-evidence-scan`: `/Users/adin/.codex/skills/qa-code-evidence-scan/scripts/ai_case_verifier.py`.
+   - Prefer the stable verifier from `qa-code-evidence-scan`: `$CODEX_HOME/skills/qa-code-evidence-scan/scripts/ai_case_verifier.py`.
    - Scan only local project code/config; never upload project code.
    - Default project scan root to the business-code root, not the report/output root. For Unity projects, prefer the Unity project folder such as `<repo>/PairPop` over the repository root when the repo also contains `QAReports/`, `reports/`, `output/`, generated scripts, or prior testcase CSVs.
    - If AI evidence reasons mention generated testcase files, report files, `QAReports/`, or the testcase generation script itself, treat the scan as polluted and rerun against the narrower business-code root before publishing.
@@ -257,5 +257,26 @@ Use this only when the user explicitly provides a Feishu/Lark requirement link o
 - `references/testcase-methodology.md`
 - `assets/testcase_template.csv`
 - `scripts/testcase_quality_checker.py`
+- `scripts/testcase_artifact_indexer.py`
 - `scripts/feishu_wiki_requirements_reader.py`
 - `scripts/feishu_testcase_bitable_publisher.py`
+
+## Historical artifact indexing
+
+When the user asks what this skill has handled, what requirement testcase
+artifacts exist, or asks for quant data for reports/PPT, run the read-only
+indexer:
+
+```bash
+python3 $CODEX_HOME/skills/qa-requirement-testcase-writer/scripts/testcase_artifact_indexer.py <SEARCH_ROOT> --json <output.json> --csv <output.csv>
+```
+
+Use the default mode for requirement testcase flow statistics. It intentionally
+skips likely non-requirement flows such as tracking analytics, bug-driven smoke,
+and RC smoke artifacts. Add `--include-other-flows` only when the user asks to
+index all testcase-like artifacts.
+
+Report only counts, requirement names, artifact types, and paths. Do not print
+CSV row contents, Feishu body text, tokens, server addresses, internal URLs, or
+business-sensitive details. Treat this index as evidence of local artifacts, not
+proof that every testcase was executed or passed.

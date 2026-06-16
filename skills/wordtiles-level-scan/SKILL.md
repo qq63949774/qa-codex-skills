@@ -1,6 +1,6 @@
 ---
 name: wordtiles-level-scan
-description: Use this for WordTiles level-file QA in `<wordtiles-repo-root>`, especially when the user asks to scan level JSON, check local level packages, verify multilingual level consistency, inspect image-word resources, or review level loading risk. Runs a project-specific checker against `WordTiles/Assets/Main/Resources/out/<lang>/diff*.json` using the current client loading rules from `GameLevel` and `TileGameData`.
+description: Use this for WordTiles level-file QA in `<WORDTILES_REPO>`, especially when the user asks to scan level JSON, check local level packages, verify multilingual level consistency, inspect image-word resources, or review level loading risk. Runs a project-specific checker against `WordTiles/Assets/Main/Resources/out/<lang>/diff*.json` using the current client loading rules from `GameLevel` and `TileGameData`.
 ---
 
 # WordTiles Level Scan
@@ -12,7 +12,7 @@ Use this skill to inspect WordTiles level resources with code-backed QA evidence
 Default local level path:
 
 ```text
-<wordtiles-unity-project-root>/Assets/Main/Resources/out/<lang>/diff*.json
+<WORDTILES_REPO>/WordTiles/Assets/Main/Resources/out/<lang>/diff*.json
 ```
 
 The checker is based on current client behavior:
@@ -28,39 +28,39 @@ The checker is based on current client behavior:
 Run the checker before making claims:
 
 ```bash
-python3 ~/.codex/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
-  --project-root <wordtiles-repo-root>
+python3 $CODEX_HOME/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
+  --project-root <WORDTILES_REPO>
 ```
 
 For a single language:
 
 ```bash
-python3 ~/.codex/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
-  --project-root <wordtiles-repo-root> \
+python3 $CODEX_HOME/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
+  --project-root <WORDTILES_REPO> \
   --language en
 ```
 
 For one level across all languages:
 
 ```bash
-python3 ~/.codex/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
-  --project-root <wordtiles-repo-root> \
+python3 $CODEX_HOME/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
+  --project-root <WORDTILES_REPO> \
   --level 101
 ```
 
 JSON output for machine comparison:
 
 ```bash
-python3 ~/.codex/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
-  --project-root <wordtiles-repo-root> \
+python3 $CODEX_HOME/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
+  --project-root <WORDTILES_REPO> \
   --json
 ```
 
 Filter one issue type:
 
 ```bash
-python3 ~/.codex/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
-  --project-root <wordtiles-repo-root> \
+python3 $CODEX_HOME/skills/wordtiles-level-scan/scripts/check_wordtiles_levels.py \
+  --project-root <WORDTILES_REPO> \
   --code runtime_file_mismatch
 ```
 
@@ -107,9 +107,9 @@ Use exact local paths and cite the code anchor that makes the issue risky. If a 
 
 Refresh these files before explaining failures:
 
-- `<wordtiles-unity-project-root>/Assets/Game/Script/GameLevel.cs`
-- `<wordtiles-unity-project-root>/Assets/Game/Script/TileGameData.cs`
-- `<wordtiles-unity-project-root>/Assets/Main/Base/UIExtension.cs`
+- `<WORDTILES_REPO>/WordTiles/Assets/Game/Script/GameLevel.cs`
+- `<WORDTILES_REPO>/WordTiles/Assets/Game/Script/TileGameData.cs`
+- `<WORDTILES_REPO>/WordTiles/Assets/Main/Base/UIExtension.cs`
 
 ## Output Guidance
 

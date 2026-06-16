@@ -7,7 +7,7 @@ description: Use when the user asks to verify the current imixsota iOS project a
 
 This skill is for QA-style requirement inspection on the current project only:
 
-- Project root: `<imixsota-project-root>`
+- Project root: `<IMIXSOTA_REPO>`
 - Main stance: QA / acceptance / evidence collection
 - Not allowed: modifying product code, inventing runtime evidence, or declaring pass without traceable proof
 
@@ -153,8 +153,8 @@ For each finding or checklist item, include:
 
 Evidence should reference concrete files, for example:
 
-- `<imixsota-project-root>/WordTop/Ad/V2/AdMaxV2Service.swift`
-- `<imixsota-project-root>/WordTopTests/AdMaxV2ServiceTests.swift`
+- `<IMIXSOTA_REPO>/WordTop/Ad/V2/AdMaxV2Service.swift`
+- `<IMIXSOTA_REPO>/WordTopTests/AdMaxV2ServiceTests.swift`
 
 When discussing runtime blockers, include the exact failed precondition, such as:
 

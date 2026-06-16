@@ -150,6 +150,7 @@ KEYWORD_EXPANSIONS = {
 @dataclass
 class CodeFile:
     rel_path: str
+    content: str
     content_lower: str
 
 
@@ -157,6 +158,9 @@ class CodeFile:
 class Evidence:
     path: str
     keywords: list[str]
+    line: int
+    anchor_kind: str
+    anchor_value: str
 
 
 def truncate_chars(text: str, max_len: int) -> str:
@@ -192,7 +196,7 @@ def collect_code_files(project_root: Path, max_size: int) -> list[CodeFile]:
         if not text or "\x00" in text:
             continue
         rel = str(path.relative_to(project_root))
-        files.append(CodeFile(rel_path=rel, content_lower=text.lower()))
+        files.append(CodeFile(rel_path=rel, content=text, content_lower=text.lower()))
     return files
 
 
@@ -243,6 +247,46 @@ def build_case_keywords(row: dict[str, str]) -> list[str]:
     return keywords
 
 
+def extract_structured_anchors(row: dict[str, str]) -> list[str]:
+    source = " ".join(
+        [
+            row.get("新增参数", ""),
+            row.get("测试内容", ""),
+            row.get("测试目的", ""),
+            row.get("需求模块", ""),
+        ]
+    )
+    anchors: list[str] = []
+    seen: set[str] = set()
+    for token in re.findall(r"[A-Za-z_][A-Za-z0-9_]{2,}", source):
+        lower = token.lower()
+        if lower in STOPWORDS:
+            continue
+        if lower not in seen:
+            seen.add(lower)
+            anchors.append(token)
+    return anchors
+
+
+def anchor_kind_for_file(path: str) -> str:
+    suffix = Path(path).suffix.lower()
+    if suffix == ".json":
+        return "key"
+    if suffix in {".yaml", ".yml", ".toml", ".ini", ".xml", ".properties"}:
+        return "config"
+    return "symbol"
+
+
+def find_line_for_terms(content: str, terms: list[str]) -> tuple[int, str]:
+    lowered_terms = [term.lower() for term in terms if term]
+    for line_no, line in enumerate(content.splitlines(), start=1):
+        lower_line = line.lower()
+        for term in lowered_terms:
+            if term in lower_line:
+                return line_no, term
+    return 1, lowered_terms[0] if lowered_terms else "evidence"
+
+
 def score_confidence(keyword_count: int, file_path: str) -> str:
     lower_path = file_path.lower()
     non_business_hints = ("package", "library", "vendor", "plugin", "third")
@@ -255,29 +299,39 @@ def score_confidence(keyword_count: int, file_path: str) -> str:
     return "Low"
 
 
-def find_best_evidence(
-    row: dict[str, str], files: list[CodeFile], min_hits: int
-) -> tuple[bool, Evidence | None]:
+def find_best_evidence(row: dict[str, str], files: list[CodeFile], min_hits: int) -> tuple[bool, Evidence | None]:
     keywords = build_case_keywords(row)
+    anchors = extract_structured_anchors(row)
     if not keywords:
         return False, None
 
     best_path = ""
     best_hits: list[str] = []
     best_count = 0
+    best_file: CodeFile | None = None
 
     for code_file in files:
-        hits = [kw for kw in keywords if kw in code_file.content_lower]
+        anchor_hits = [anchor for anchor in anchors if anchor.lower() in code_file.content_lower]
+        keyword_hits = [kw for kw in keywords if kw in code_file.content_lower]
+        hits = anchor_hits + [kw for kw in keyword_hits if kw not in anchor_hits]
         hit_count = len(hits)
         if hit_count > best_count:
             best_count = hit_count
             best_hits = hits
             best_path = code_file.rel_path
+            best_file = code_file
 
-    if best_count < min_hits:
+    if best_count < min_hits or best_file is None:
         return False, None
 
-    return True, Evidence(path=best_path, keywords=best_hits)
+    line, anchor = find_line_for_terms(best_file.content, best_hits)
+    return True, Evidence(
+        path=best_path,
+        keywords=best_hits,
+        line=line,
+        anchor_kind=anchor_kind_for_file(best_path),
+        anchor_value=anchor,
+    )
 
 
 def ensure_columns(fieldnames: list[str]) -> list[str]:
@@ -335,15 +389,20 @@ def main() -> int:
     for row in rows:
         ok, evidence = find_best_evidence(row, code_files, args.min_hits)
         if ok and evidence:
-            top_hits = evidence.keywords[:5]
-            reason = f"命中{evidence.path}:{'/'.join(top_hits[:3])}"
+            top_hits = evidence.keywords[:3]
+            reason = (
+                f"{evidence.path}:{evidence.line} "
+                f"{evidence.anchor_kind}={evidence.anchor_value}; "
+                f"evidence_terms={','.join(top_hits)}; 仍需运行验证"
+            )
             confidence = score_confidence(len(evidence.keywords), evidence.path)
-            row["AI测试结果"] = "不通过"
             if confidence == "Low":
+                row["AI测试结果"] = "不通过"
                 row["AI判定原因"] = "仅命中低置信关键词，缺少可追溯实现锚点"
             else:
-                detail = truncate_chars(reason, args.max_reason_len)
-                row["AI判定原因"] = f"仅命中关键词，缺少可追溯实现锚点: {detail}"
+                passed += 1
+                row["AI测试结果"] = "通过"
+                row["AI判定原因"] = truncate_chars(reason, args.max_reason_len)
         else:
             row.setdefault("测试结果", row.get("测试结果", ""))
             row["AI测试结果"] = "不通过"

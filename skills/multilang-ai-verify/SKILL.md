@@ -14,7 +14,7 @@ Run from the multilingual data folder itself, or pass `--data-dir <folder>` from
 If `./multilang_scan_rules.json` exists:
 
 ```bash
-python3 ~/.codex/skills/multilang-ai-verify/scripts/scan_multilang_project.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/scan_multilang_project.py \
   --rules-file ./multilang_scan_rules.json \
   --data-dir .
 ```
@@ -22,7 +22,7 @@ python3 ~/.codex/skills/multilang-ai-verify/scripts/scan_multilang_project.py \
 If no rules file:
 
 ```bash
-python3 ~/.codex/skills/multilang-ai-verify/scripts/scan_multilang_project.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/scan_multilang_project.py \
   --data-dir .
 ```
 
@@ -44,7 +44,7 @@ Recommended: put provider settings in a config file in the current directory. Th
 Standard run:
 
 ```bash
-python3 ~/.codex/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
   --input ./language_suspect_entries.csv \
   --output ./language_suspect_entries_ai.csv \
   --batch-size 50
@@ -54,7 +54,7 @@ python3 ~/.codex/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py 
 Use this when the user explicitly wants full AI scanning of every entry instead of "heuristic scan first, AI review second".
 
 ```bash
-python3 ~/.codex/skills/multilang-ai-verify/scripts/ai_scan_all_entries.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/ai_scan_all_entries.py \
   --data-dir ./all_languages_batch_export_1773891385967 \
   --batch-size 10
 ```
@@ -71,7 +71,7 @@ If you also want every scanned entry, explicitly add:
 Check whether the config was loaded correctly before making requests:
 
 ```bash
-python3 ~/.codex/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
   --input ./language_suspect_entries.csv \
   --output ./language_suspect_entries_ai.csv \
   --check-config
@@ -107,7 +107,7 @@ export MINIMAX_API_KEY="..."
 export MINIMAX_BASE_URL="https://api.minimax.io/v1"
 export MINIMAX_MODEL="MiniMax-M2.5"
 
-python3 ~/.codex/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
   --provider minimax \
   --input ./language_suspect_entries.csv \
   --output ./language_suspect_entries_ai.csv \
@@ -129,7 +129,7 @@ export DEEPSEEK_API_KEY="..."
 export DEEPSEEK_BASE_URL="https://api.deepseek.com"
 export DEEPSEEK_MODEL="deepseek-chat"
 
-python3 ~/.codex/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
+python3 $CODEX_HOME/skills/multilang-ai-verify/scripts/deepseek_verify_suspects.py \
   --provider deepseek \
   --input ./language_suspect_entries.csv \
   --output ./language_suspect_entries_ai.csv \

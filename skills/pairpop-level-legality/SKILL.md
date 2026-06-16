@@ -7,7 +7,7 @@ description: Use when checking PairPop level JSON legality or solvability for th
 
 Use this skill when the task is to inspect PairPop level JSONs for structural legality under the current client implementation.
 
-This skill is project-specific for `<pairpop-repo-root>`. It is related to `pairmatch-level-solvability`, but PairPop ships PairPop-specific `model=0` column data and `model=3` text-bubble data, which that PairMatch checker rejects.
+This skill is project-specific for `<PAIRPOP_REPO>`. It is related to `pairmatch-level-solvability`, but PairPop ships PairPop-specific `model=0` column data and `model=3` text-bubble data, which that PairMatch checker rejects.
 
 ## Scope
 
@@ -36,11 +36,11 @@ The guarantee is invariant-based. It is not a brute-force physics or move-count 
 
 Refresh these files before making claims:
 
-- `<pairpop-unity-project-root>/Assets/Script/Data/PuzzleDataManager.cs`
-- `<pairpop-unity-project-root>/Assets/Script/GameCtr.cs`
-- `<pairpop-unity-project-root>/Assets/Script/GameBubbleCtr.cs`
-- `<pairpop-unity-project-root>/Assets/Script/TextBubble.cs`
-- `<pairpop-unity-project-root>/Assets/Script/Bubble.cs`
+- `<PAIRPOP_REPO>/PairPop/Assets/Script/Data/PuzzleDataManager.cs`
+- `<PAIRPOP_REPO>/PairPop/Assets/Script/GameCtr.cs`
+- `<PAIRPOP_REPO>/PairPop/Assets/Script/GameBubbleCtr.cs`
+- `<PAIRPOP_REPO>/PairPop/Assets/Script/TextBubble.cs`
+- `<PAIRPOP_REPO>/PairPop/Assets/Script/Bubble.cs`
 
 Important behaviors:
 
@@ -60,30 +60,30 @@ Important behaviors:
 Run:
 
 ```bash
-python3 ~/.codex/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
-  --puzzle-dir <pairpop-unity-project-root>/Assets/Resources/PuzzleData
+python3 $CODEX_HOME/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
+  --puzzle-dir <PAIRPOP_REPO>/PairPop/Assets/Resources/PuzzleData
 ```
 
 For a standalone exported level file:
 
 ```bash
-python3 ~/.codex/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
-  --json-file <pairpop-repo-root>/levels_01-100.json
+python3 $CODEX_HOME/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
+  --json-file <PAIRPOP_REPO>/levels_01-100.json
 ```
 
 Optional filters:
 
 ```bash
-python3 ~/.codex/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
-  --puzzle-dir <pairpop-unity-project-root>/Assets/Resources/PuzzleData \
+python3 $CODEX_HOME/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
+  --puzzle-dir <PAIRPOP_REPO>/PairPop/Assets/Resources/PuzzleData \
   --level level1
 ```
 
 JSON output:
 
 ```bash
-python3 ~/.codex/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
-  --puzzle-dir <pairpop-unity-project-root>/Assets/Resources/PuzzleData \
+python3 $CODEX_HOME/skills/pairpop-level-legality/scripts/check_pairpop_level_legality.py \
+  --puzzle-dir <PAIRPOP_REPO>/PairPop/Assets/Resources/PuzzleData \
   --json
 ```
 

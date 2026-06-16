@@ -102,7 +102,7 @@ def resolve_dataset_specs(dataset_specs: List[str] | None) -> Dict[str, str]:
 
 
 def default_baseline_dir(project_root: Path, version: str, baseline_root: Path | None) -> Path:
-    root = baseline_root or Path.home() / ".qa-codex-skill-data" / "config-baselines"
+    root = baseline_root or Path.home() / "qa-config-baselines"
     return root / project_root.name / version
 
 

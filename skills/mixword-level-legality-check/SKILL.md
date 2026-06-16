@@ -32,7 +32,7 @@ description: 检查 Mixword 或 gpMixWord 的关卡文件合法性，适用于 `
 5. 运行脚本：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -47,7 +47,7 @@ python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
 按关卡号检查普通关：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -58,7 +58,7 @@ python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
 直接检查某个资源槽位：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -70,7 +70,7 @@ python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
 批量扫描英文普通关：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -82,7 +82,7 @@ python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
 批量扫描奖励关：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset special \
   --language en \
@@ -94,7 +94,7 @@ python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
 检查首关所有语言布局是否一致：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -105,7 +105,7 @@ python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
 检查所有普通关的跨语言布局一致性：
 
 ```bash
-python3 ~/.codex/skills/mixword-level-legality-check/scripts/check_levels.py \
+python3 $CODEX_HOME/skills/mixword-level-legality-check/scripts/check_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \

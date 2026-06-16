@@ -42,7 +42,7 @@ For Feishu Bug List links:
 Use `scripts/export_feishu_base_view.py` for Feishu Base view export:
 
 ```bash
-python ~/.codex/skills/qa-bug-driven-smoke-testcase/scripts/export_feishu_base_view.py \
+python $CODEX_HOME/skills/qa-bug-driven-smoke-testcase/scripts/export_feishu_base_view.py \
   --url '<feishu wiki/base url with table/view query>' \
   --output feishu_buglist_rc.csv
 ```
@@ -131,7 +131,7 @@ If `lark-cli` reports missing scopes, run the exact read-only login it suggests,
    Run the testcase quality checker from `qa-requirement-testcase-writer` when available:
 
 ```bash
-python ~/.codex/skills/qa-requirement-testcase-writer/scripts/testcase_quality_checker.py \
+python $CODEX_HOME/skills/qa-requirement-testcase-writer/scripts/testcase_quality_checker.py \
   --cases <main.csv> \
   --report <coverage.md>
 ```

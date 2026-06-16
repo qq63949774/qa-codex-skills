@@ -29,7 +29,7 @@ When the project source is available, use these files as the rule source:
 ## Workflow
 
 1. Confirm the project root. For this repository, use the Unity root that contains `Assets/`, for example:
-   `<mathsota-project-root>`
+   `<MATHSOTA_UNITY_ROOT>`
 2. Pick dataset:
    - `normal` scans `Assets/Game/Levels/Resources/LevelData/<language>`
    - `special` scans `Assets/Game/Levels/Resources/SpecialLevelData/<language>`
@@ -49,7 +49,7 @@ When the project source is available, use these files as the rule source:
 Full normal/en scan:
 
 ```bash
-python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
+python3 $CODEX_HOME/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -59,7 +59,7 @@ python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic
 Single mapped level:
 
 ```bash
-python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
+python3 $CODEX_HOME/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -69,7 +69,7 @@ python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic
 Single file slot:
 
 ```bash
-python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
+python3 $CODEX_HOME/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \
@@ -80,7 +80,7 @@ python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic
 Export CSV failures/details:
 
 ```bash
-python3 ~/.codex/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
+python3 $CODEX_HOME/skills/mathsota-arithmetic-level-check/scripts/check_arithmetic_levels.py \
   --project-root /absolute/project/root \
   --dataset normal \
   --language en \

@@ -12,7 +12,7 @@ description: Check Sotaten Unity project level legality for generated Ten card l
 3. Run the checker:
 
 ```bash
-python3 ~/.codex/skills/sotaten-level-legality/scripts/check_sotaten_levels.py --project .
+python3 $CODEX_HOME/skills/sotaten-level-legality/scripts/check_sotaten_levels.py --project .
 ```
 
 Use `--levels N` for a wider generated-level sweep. Use `--settings path/to/game-setting.json` when a remote game setting payload may override `startLevelConfig` or `tenConfig`.

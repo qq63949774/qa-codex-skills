@@ -1,0 +1,4 @@
+interface:
+  display_name: "PairPop 崩溃路径用例"
+  short_description: "生成中文崩溃 QA 用例"
+  default_prompt: "Use $pairpop-crash-path-audit to generate 中文 PairPop 崩溃测试用例，包含环境准备、操作步骤、预期结果、日志关键词和代码证据。"

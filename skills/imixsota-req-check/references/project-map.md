@@ -4,7 +4,7 @@ Use this reference only when the request is about this repository.
 
 ## Scope
 
-- Project root: `<imixsota-project-root>`
+- Project root: `<IMIXSOTA_REPO>`
 - Product: iOS project `WordTop`
 - Typical requirement inspection target: ad loading, config parsing, lifecycle, acceptance section verification
 

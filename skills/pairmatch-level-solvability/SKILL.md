@@ -30,11 +30,11 @@ This is an invariant-based guarantee, not an exhaustive state-space solver.
 
 Refresh these files before making claims:
 
-- `<pairmatch-unity-project-root>/Assets/Script/Card.cs`
-- `<pairmatch-unity-project-root>/Assets/Script/ColumnCtr.cs`
-- `<pairmatch-unity-project-root>/Assets/Script/GameCtr.cs`
-- `<pairmatch-unity-project-root>/Assets/Script/Data/PuzzleDataManager.cs`
-- `<pairmatch-unity-project-root>/Assets/Script/GameTableCtr.cs`
+- `<PAIRMATCH_REPO>/PairMatch/Assets/Script/Card.cs`
+- `<PAIRMATCH_REPO>/PairMatch/Assets/Script/ColumnCtr.cs`
+- `<PAIRMATCH_REPO>/PairMatch/Assets/Script/GameCtr.cs`
+- `<PAIRMATCH_REPO>/PairMatch/Assets/Script/Data/PuzzleDataManager.cs`
+- `<PAIRMATCH_REPO>/PairMatch/Assets/Script/GameTableCtr.cs`
 
 The important behaviors are:
 
@@ -52,14 +52,14 @@ Run the bundled checker:
 
 ```bash
 python3 scripts/check_pairmatch_solvability.py \
-  --puzzle-dir <pairmatch-unity-project-root>/Assets/Resources/PuzzleData
+  --puzzle-dir <PAIRMATCH_REPO>/PairMatch/Assets/Resources/PuzzleData
 ```
 
 Optional filters:
 
 ```bash
 python3 scripts/check_pairmatch_solvability.py \
-  --puzzle-dir <pairmatch-unity-project-root>/Assets/Resources/PuzzleData \
+  --puzzle-dir <PAIRMATCH_REPO>/PairMatch/Assets/Resources/PuzzleData \
   --level level30
 ```
 
@@ -67,7 +67,7 @@ JSON output:
 
 ```bash
 python3 scripts/check_pairmatch_solvability.py \
-  --puzzle-dir <pairmatch-unity-project-root>/Assets/Resources/PuzzleData \
+  --puzzle-dir <PAIRMATCH_REPO>/PairMatch/Assets/Resources/PuzzleData \
   --json
 ```
 
@@ -75,7 +75,7 @@ Cloud patch / merged level file:
 
 ```bash
 python3 scripts/check_pairmatch_solvability.py \
-  --json-file <pairmatch-repo-root>/levels_1_470.json \
+  --json-file <SEARCH_ROOT>/moby/ipair/levels_1_470.json \
   --level level5 \
   --level level25 \
   --json

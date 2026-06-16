@@ -16,13 +16,13 @@ Scan multilingual level JSONs in the current project for non-local script words 
 - Default (current directory contains `Mix多语言700关卡/`):
 
 ```bash
-python3 ~/.codex/skills/multilang-scan-qa/scripts/scan_multilang.py
+python3 $CODEX_HOME/skills/multilang-scan-qa/scripts/scan_multilang.py
 ```
 
 - If the data folder name is different:
 
 ```bash
-python3 ~/.codex/skills/multilang-scan-qa/scripts/scan_multilang.py --data-dir <folder>
+python3 $CODEX_HOME/skills/multilang-scan-qa/scripts/scan_multilang.py --data-dir <folder>
 ```
 
 ## Rules enforced by the script

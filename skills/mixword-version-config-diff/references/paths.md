@@ -18,6 +18,6 @@
   - `common_normal/`
   - `common_bonus/`
 - 同时生成 `manifest.json`
-- 默认基线目录为 `~/.qa-codex-skill-data/config-baselines/<project-name>/<version>`
+- 默认基线目录为 `$HOME/qa-config-baselines/<project-name>/<version>`
 
 如果项目目录结构以后变化，优先改脚本中的 `DATASET_SPECS`，不要在对话里临时拼路径。

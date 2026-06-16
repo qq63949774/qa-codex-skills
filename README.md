@@ -6,7 +6,7 @@ It contains only Codex skill instructions, scripts, references, and templates. I
 
 ## Install From GitHub
 
-After this repository is pushed to GitHub, teammates can install the skills with:
+Teammates can install the skills with:
 
 ```bash
 npx github:OWNER/REPO install
@@ -97,6 +97,8 @@ The QA Proof Desk website shares workflow state and task packages. It does not c
 - `multilang-ai-verify`
 - `multilang-scan-qa`
 - `pairmatch-level-solvability`
+- `pairpop-backend-param-diff-testcase`
+- `pairpop-crash-path-audit`
 - `pairpop-level-legality`
 - `qa-bug-driven-smoke-testcase`
 - `qa-buglist-rc-risk`
